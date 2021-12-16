@@ -1,0 +1,108 @@
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
+
+<div class="mt-0 mr-2 float-right">
+    <button id= "btnAgregar" class="btnAgregar btn btn-primary mr-0 mt-1" data-bs-toggle="modal" data-bs-target="#ModalCargarTarjetas"><i class="fa fa-plus" aria-hidden="true"></i> Cargar datos</button>
+</div>
+<div class="mt-5">
+    <table class="table table-bordered">
+        <thead class="text-white bg-dark">
+            <tr>
+                <th *ngFor="let e of col" scope="col" class="text-center">{{e}}</th>
+                <th scope="col" class="text-center">Modificar</th>
+                <th scope="col" class="text-center">Borrar</th>
+            </tr>
+        </thead>
+        <tbody class="text-black bg-light">
+            <tr *ngFor="let x of li;" (click)="onclickRow(x.id_tarjeta)">
+                <td scope="row" class="text-center">
+                    {{x.id_tarjeta}}
+                </td>
+                <td class="text-center">
+                    {{x.fechaexp}}
+                </td>
+                <td class="text-center">
+                    {{x.cvv}}
+                </td>
+                <td class="text-center">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#Modalmodificartarjetas" (click)="modifClick(x.id_tarjeta, x.fechaexp, x.cvv)" ><i class="fa fa-pencil" aria-hidden="true"></i> Editar</button>
+                </td>
+                <td class="text-center">
+                    <button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Borrar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>   
+</div>
+
+
+                                        <! ––       Modal cargar            ––> 
+
+<div class="modal fade" id="ModalCargarTarjetas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cargar tarjetas</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form #postAgregar="ngForm" (ngSubmit)= "postAgregarTar(postAgregar.value)">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label>Fecha</label>
+                    <input type="month" class="form-control" ngModel name="fechaexp" id="fechaexp">
+                </div>
+
+                <div class="mb-3">
+                    <label>CVV</label>
+                    <input type="text" class="form-control" ngModel name="cvv" placeholder="cvv" id="cvv">
+                </div>
+            </div>
+        
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary position-absolute bottom-0 start-0" data-bs-dismiss="modal">Cerrar</button>
+
+            <button type="submit" class="btn btn-primary  position-absolute bottom-0 end-0">Cargar!</button>
+        </div>
+    </form>
+        </div>
+    </div>
+</div>
+
+
+                                                <! ––       Modal editar            ––> 
+
+<div class="modal fade" id="Modalmodificartarjetas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        <div class="modal-header">
+            <h5 class="modal-title text-center" id="exampleModalLabel">Modificar tarjetas cargadas</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form #putModif="ngForm" (ngSubmit)= "putModifTar(putModif.value)">
+            <div class="modal-body">
+                <input type="text" class="form-control" ngModel [value]="editid" name="idtarjm" id="idtarjm">
+                <div class="mb-3">
+                    <label>Fecha</label>
+                    <input type="month" class="form-control" ngModel [value]="edittarj"  name="fechaexpm" id="fechaexpm">
+                </div>
+
+                <div class="mb-3">
+                    <label>CVV</label>
+                    <input type="text" class="form-control" ngModel  [value]="editcvv"  name="cvvm" id="cvvm" placeholder="cvvm">
+                </div>
+            </div>
+        
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary position-absolute bottom-0 start-0" data-bs-dismiss="modal">Cerrar</button>
+
+            <button type="submit" class="btn btn-warning  position-absolute bottom-0 end-0">Modificar!</button>
+        </div>
+    </form>
+        </div>
+    </div>
+</div>
